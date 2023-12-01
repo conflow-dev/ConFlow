@@ -1,0 +1,126 @@
+/*
+ * Copyright (C) 2011-2018 Intel Corporation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in
+ *     the documentation and/or other materials provided with the
+ *     distribution.
+ *   * Neither the name of Intel Corporation nor the names of its
+ *     contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
+/* Enclave.edl - Top EDL file. */
+enclave {
+    from "sgx_pthread.edl" import *;
+    trusted {
+        public void ecall_encrypt([user_check]float *input,int N, [user_check]float *output);
+        public void ecall_decrypt([user_check]float *input,int N, [user_check]float *output);
+        public void ecall_relu([user_check]float *input,int N, [user_check]float *output);
+        public void ecall_sigmoid([user_check]float *input,int N, [user_check]float *output);
+        public void ecall_logloss([user_check]float *input,int N,int M,int C,[user_check]float *label,[user_check]float *weight,[user_check]float *output);
+        public void ecall_relu_grad([user_check]float *input,[user_check]float *grad,int N,[user_check]float *output);
+        public void ecall_sigmoid_grad([user_check]float *input,[user_check]float *grad,int N,[user_check]float *output);
+        public void ecall_logloss_grad([user_check]float *input,float grad,int N,int M,int C,[user_check]float *label,[user_check]float *weight,[user_check]float *grad_x,[user_check]float *grad_w,[user_check]float *grad_l);
+	public void emb_en(uint32_t dim,[user_check] float* values,float range);
+        public void emb_ss([user_check] float* input,[user_check] float* output,int M,int C,int num,int dim);
+        public void emb_ss_grad([user_check] float* grad,[user_check] float* output,int M,int C,int num,int dim);
+	public void ecall_ceshi([user_check]float* input,[user_check]float* output,int M,int C);
+        public void ecall_ceshi_grad([user_check]float* input,[user_check]float* output,int M,int C);	
+        public void ecall_tanh([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_tanh_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_softplus([user_check]float *input,int N,[user_check] float *output);
+        public void ecall_softplus_grad([user_check]float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_leakyrelu([user_check] float *input,int N,[user_check] float *output,float alpha);
+        public void ecall_leakyrelu_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output,float alpha);
+        public void ecall_abs([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_abs_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_log([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_log_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_exp([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_exp_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_sign([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_sign_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_square([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_square_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *output);
+        public void ecall_lessequal([user_check] float *input,int N,[user_check] float *output,float alpha);
+        public void ecall_greater([user_check] float *input,int N,[user_check] float *output,float alpha);
+        public void ecall_reducesum([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_reducesum_grad([user_check] float *input,float grad,int N,[user_check] float *output);
+        public void ecall_reducemean([user_check] float *input,int N,[user_check] float *output);
+        public void ecall_reducemean_grad([user_check] float *input,float grad,int N,[user_check] float *output);
+        public void ecall_maximum([user_check] float *input1,[user_check] float *input2,int N,[user_check] float *output);
+        public void ecall_maximum_grad([user_check] float *input1,[user_check] float *input2,[user_check] float *grad,int N,[user_check] float *output1,[user_check] float *output2);
+        public void ecall_minimum([user_check] float *input1,[user_check] float *input2,int N,[user_check] float *output);
+        public void ecall_minimum_grad([user_check] float *input1,[user_check] float *input2,[user_check] float *grad,int N,[user_check] float *output1,[user_check] float *output2);
+        public void ecall_softmax([user_check] float *input,int N,int M,int C,[user_check] float *output);
+        public void ecall_softmax_grad([user_check] float *input,[user_check] float *grad,int N,int M,int C,[user_check] float *output);
+        public void ecall_clip([user_check] float *input, [user_check] float* down,[user_check] float* up,int n1,int n2,int N,[user_check] float *output);
+        public void ecall_clip_grad([user_check] float *input,[user_check] float *grad, [user_check] float* down,[user_check] float* up,int n1,int n2,int N,[user_check] float *output);
+        public void ecall_reducemax_one([user_check] float *input,int N,int M,int C,int L,[user_check] float *output);
+        public void ecall_reducemax_one_grad([user_check] float *input,[user_check] float *grad,int N,int M,int C,int L,[user_check] float *output);
+        public void ecall_huberloss([user_check] float* pred,[user_check] float* real,[user_check]float* delta, int N,int C,int B, [user_check] float* output);
+        public void ecall_huberloss_grad([user_check] float* pred,[user_check]float* real,[user_check]float* delta,[user_check] float* grad, int N,int C,int B,[user_check] float* output,[user_check] float* grad_r);
+        public void ecall_onehot([user_check] float* input, int N, int M,int C,int L,[user_check] float* output,int alpha);
+        public void ecall_sample([user_check] float* input1,[user_check] float* input2, int N,int nums, [user_check] float* output);
+        public void ecall_logprob([user_check] float* input,[user_check] float* mu,[user_check] float* sigma, int N,[user_check] float* output);
+        public void ecall_logprob_grad([user_check] float* input,[user_check] float *grad,[user_check] float* mu,[user_check] float* sigma, int N,[user_check] float* output);
+        public void ecall_logloss_none([user_check] float *input,int N,[user_check] float *label,[user_check] float *weight,[user_check] float *output);
+	public void ecall_logloss_none_grad([user_check] float *input,[user_check] float *grad,int N,[user_check] float *label,[user_check] float *weight,[user_check] float *grad_x,[user_check] float *grad_w,[user_check] float *grad_l);
+	public void ecall_reducemean_0([user_check] float *input,int N,int M,int L,[user_check] float *output);
+	public void ecall_reducemean_0_grad([user_check] float *input,[user_check] float* grad,int N,int M,int L,[user_check] float *output);
+	public void ecall_moments([user_check] float* input, int N,int M, int C, int L,[user_check]  float* mean,[user_check] float* var);
+	public void ecall_moments_grad([user_check] float* input, [user_check] float* grad1,[user_check] float* grad2,int N,int M, int C, int L, [user_check] float* output);
+	public void ecall_batchnorm([user_check] float* input,[user_check] float* scale,[user_check] float* offset,[user_check] float* mean_x,[user_check] float* variance, int N,int M,int H,int W, [user_check] float* output,float epsilon);
+	public void ecall_batchnorm_grad([user_check] float* input,[user_check] float* grad,[user_check] float* scale,[user_check] float* offset,[user_check] float* mean_x,[user_check] float* variance, int N,int M,int H,int W,[user_check] float* grad_in,[user_check] float* grad_sc,[user_check] float* grad_off,[user_check] float* grad_mean,[user_check] float* grad_var,float epsilon);
+	public void ecall_dot([user_check] float* input1,[user_check] float* input2, int N1, int N2,[user_check] int* shape1,[user_check] int* shape2,int ndims,[user_check] float* output);
+	public void ecall_dot_grad([user_check] float* input1,[user_check] float* input2, [user_check] float* grad,int N1, int N2,[user_check] int* shape1,[user_check] int* shape2,int ndims ,[user_check] float* output1,[user_check] float* output2);
+	public void ecall_divi([user_check] float* input1,[user_check] float* input2, int N1, int N2,[user_check] int* shape1,[user_check] int* shape2,[user_check] float* output);
+        public void ecall_divi_grad([user_check] float* input1,[user_check] float* input2, [user_check] float* grad,int N1, int N2,[user_check] int* shape1,[user_check] int* shape2 ,[user_check] float* output1,[user_check] float* output2);
+	public void ecall_math([user_check]float* input,float num,int N,[user_check]float* output);
+	public void ecall_matadd([user_check] float* input1,[user_check] float* input2,int N,int C,[user_check] float* output);
+	public void ecall_matadd_grad([user_check] float* input1,[user_check] float* input2,[user_check] float* grad,int N,int C,[user_check] float* output1,[user_check] float* output2);
+	public void ecall_reducemax_zero([user_check]float *input,int N,int M,int C,int L,[user_check]float *output);
+	public void ecall_reducemax_zero_grad([user_check]float *input,[user_check]float *grad,int N,int M,int C,int L,[user_check]float *output);
+	public void ecall_reducemin_one([user_check]float *input,int N,int M,int C,int L,[user_check]float *output);
+        public void ecall_reducemin_one_grad([user_check]float *input,[user_check]float *grad,int N,int M,int C,int L,[user_check]float *output);
+	public void ecall_reducemin_zero([user_check]float *input,int N,int M,int C,int L,[user_check]float *output);
+        public void ecall_reducemin_zero_grad([user_check]float *input,[user_check]float *grad,int N,int M,int C,int L,[user_check]float *output);
+	public void ecall_sort_de([user_check]float *input,int N,int M ,int C,int L,[user_check]float *output);
+	public void ecall_sort_de_grad([user_check]float *input,[user_check]float* grad,int N,int M ,int C,int L,[user_check]float *output);
+	public void ecall_where_equal([user_check]float *input1,[user_check]float *input2,[user_check]float *cond1,[user_check]float *cond2,int N,int n1,int n2,[user_check]float *output);
+	public void ecall_where_equal_grad([user_check]float* grad,[user_check]float *input1,[user_check]float *input2,[user_check]float *cond1,[user_check]float *cond2,int N,int n1,int n2,[user_check]float *output1,[user_check]float* output2);
+	public void ecall_where_gequal([user_check]float *input1,[user_check]float *input2,[user_check]float *cond1,[user_check]float *cond2,int N,int n1,int n2,[user_check]float *output);
+	public void ecall_where_gequal_grad([user_check]float* grad,[user_check]float *input1,[user_check]float *input2,[user_check]float *cond1,[user_check]float *cond2,int N,int n1,int n2,[user_check]float *output1,[user_check]float* output2);
+	public void ecall_where_greater([user_check]float *input1,[user_check]float *input2,[user_check]float *cond1,[user_check]float *cond2,int N,int n1,int n2,[user_check]float *output);
+	public void ecall_where_greater_grad([user_check]float* grad,[user_check]float *input1,[user_check]float *input2,[user_check]float *cond1,[user_check]float *cond2,int N,int n1,int n2,[user_check]float *output1,[user_check]float *output2);
+	public void ecall_softmax_cross_entropy([user_check]float* pred,int N,int M,int C,[user_check]float* real,[user_check] float* output);
+	public void ecall_softmax_cross_entropy_grad([user_check] float* pred,[user_check] float* grad, int N, int M,int C,[user_check] float* real,[user_check] float* output,[user_check] float* grad_r);
+	public void ecall_matmul([user_check]float *input,[user_check]float* weight,int N,int M,int C,[user_check]float *output);
+	public void ecall_matmul_grad([user_check]float *input,[user_check] float* grad,[user_check]float* weight,int N,int M,int C,[user_check]float *output1,[user_check]float* output2);
+};    
+untrusted {
+        void ocall_print_string([in, string] const char *str);
+    };
+
+};
+
